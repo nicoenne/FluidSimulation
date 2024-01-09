@@ -3,10 +3,6 @@
     padding: 0px;
 }
 
-body {
-    background-color: black;
-}
-
 .draw {
     position: fixed;
     left: 0px;

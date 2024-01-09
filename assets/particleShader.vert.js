@@ -1,17 +1,18 @@
 export const vertex = /* glsl */ `
+attribute vec2 reference;
 
-attribute vec2 a_position;
-attribute vec2 a_velocity;
+uniform sampler2D texturePosition;
+uniform sampler2D textureVelocity;
 
-uniform vec2 u_resolution;
-
-varying float v_color;
+varying vec2 v_texcoord;
 
 void main() {
-  vec2 clipSpace = a_position / u_resolution;
-  gl_Position = vec4(clipSpace, 0, 1);
-  gl_PointSize = 150.0;
+  vec3 particlePosition = texture2D( texturePosition, reference ).xyz;
+  vec3 velocity = normalize(texture2D( textureVelocity, reference ).xyz);
 
-  v_color = dot(a_velocity, a_velocity);
+  vec3 newPosition = position + particlePosition;
+
+  v_texcoord = uv;
+  gl_Position = projectionMatrix *  viewMatrix  * vec4( newPosition, 1.0 );
 }
 `;
